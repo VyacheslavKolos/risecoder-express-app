@@ -1,9 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
+app.use(bodyParser.json());
 
-const userRouter = require('./api/user/router');
+const flatRouter = require('./api/flat/router');
 
-app.use('/users', userRouter);
+app.use('/flats', flatRouter);
 
 app.listen(3001, () => {
   console.log('Listen 3001');
