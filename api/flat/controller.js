@@ -1,48 +1,31 @@
 const service = require('./service');
 
-function getAllFlats(req, res) {
-  const allUsers = service.getAllFlats();
+async function getAllFlats(req, res) {
+  const allUsers = await service.getAllFlats();
 
   res.json(allUsers);
 }
 
-function getFlatById(req, res) {
-  const singleFlat = service.getFlatById(req.params.flatId);
-
-  if (!singleFlat) {
-    return res.status(404).json('flat not found');
-  }
+async function getFlatById(req, res) {
+  const singleFlat = await service.getFlatById(req.params.flatId);
 
   res.json(singleFlat);
 }
-
-function createFlat(req, res) {
+async function createFlat(req, res) {
   const reqBodyFlat = req.body;
-  const createdFlats = service.createFlat(reqBodyFlat);
-
-  if (!createdFlats) {
-    return res.status(404).json('flat not found');
-  }
+  const createdFlats = await service.createFlat(reqBodyFlat);
 
   res.json(createdFlats);
 }
 
-function updateFullFlat(req, res) {
+async function updateFullFlat(req, res) {
   const reqBodyFlat = req.body;
-  const updatedFlats = service.updateFullFlat(req.params.flatId, reqBodyFlat);
-
-  if (!updatedFlats) {
-    return res.status(404).json('flats not found');
-  }
+  const updatedFlats = await service.updateFullFlat(req.params.flatId, reqBodyFlat);
 
   res.json(updatedFlats);
 }
-function deleteFlat(req, res) {
-  const flatsAfterDelete = service.deleteFlat(req.params.flatId);
-
-  if (!flatsAfterDelete) {
-    return res.status(404).json('flat not found');
-  }
+async function deleteFlat(req, res) {
+  const flatsAfterDelete = await service.deleteFlat(req.params.flatId);
 
   res.json(flatsAfterDelete);
 }
