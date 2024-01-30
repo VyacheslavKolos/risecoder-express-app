@@ -15,6 +15,6 @@ const flatRouter = require('./api/flat/router');
 
 app.use('/flats', flatRouter);
 
-app.listen(3001, () => {
-  console.log('Listen 3001');
+app.listen(configs.PORT, () => {
+  console.log(`Listen ${configs.PORT}`);
 });
