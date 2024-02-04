@@ -1,7 +1,19 @@
 const Flat = require('../../dataBase/Flat');
 
-function getAllFlats() {
-  return Flat.find();
+async function getAllFlats(findObject) {
+  const { page, perPage } = findObject;
+  const skip = (page - 1) * perPage;
+
+  const [flats, totalCount] = await Promise.all([
+    Flat.find().limit(perPage).skip(skip),
+    Flat.countDocuments(),
+  ]);
+  return {
+    data: flats,
+    page,
+    limit: perPage,
+    total: totalCount,
+  };
 }
 
 function getFlatById(flatId) {
