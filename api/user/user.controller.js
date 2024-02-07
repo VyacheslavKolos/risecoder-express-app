@@ -1,6 +1,8 @@
 const service = require('./user.service');
 const httpStatuses = require('../../configs/responseStatuses');
 const passwordService = require('../../services/password.service');
+const emailService = require('../../services/email.service');
+const { EMAIL_TYPES } = require('../../configs/enums');
 async function getAllUsers(req, res, next) {
   try {
     const allUsers = await service.getAllUsers(req.query);
@@ -22,6 +24,8 @@ async function createUser(req, res, next) {
     if (!createdUser) {
       throw new Error('User not found');
     }
+    await emailService.sendMail(reqBodyUser.email, EMAIL_TYPES.WELCOME, { name: reqBodyUser.name });
+
     res.status(httpStatuses.CREATED).json(createdUser);
   } catch (e) {
     next(e);

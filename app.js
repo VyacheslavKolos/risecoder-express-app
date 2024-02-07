@@ -29,7 +29,9 @@ app.use('/auth', authRouter);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  res.json(err.message || 'Unknown error');
+  res
+    .status(err.statusCode || 500)
+    .json({ message: err.message || 'Unknown error', customCode: err?.subCode });
 });
 
 app.listen(configs.PORT, () => {
